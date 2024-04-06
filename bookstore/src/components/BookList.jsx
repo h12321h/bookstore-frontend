@@ -3,8 +3,6 @@ import Book from "./Book";
 
 import coverImageUrl from "../img/bg.jpg";
 
-
-
 const books = [
     { id: 1, title: "Book One", author: "Author One", coverImageUrl: coverImageUrl, littleIntroduction: "This is a book about...", Introduction: "This is a book about...", price: 100},
     { id: 2, title: "Book Two", author: "Author Two", coverImageUrl: coverImageUrl, littleIntroduction: "This is a book about...", Introduction: "This is a book about...", price: 100 },
@@ -22,6 +20,7 @@ function BookList() {
           {books.map(book => (
               <Book
                   key={book.id}
+                    id={book.id}
                   coverImageUrl={book.coverImageUrl}
                   title={book.title}
                   author={book.author}

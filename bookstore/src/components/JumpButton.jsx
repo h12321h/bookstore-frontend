@@ -1,8 +1,12 @@
 import react from 'react';
 import ReactDOM from 'react-dom/client';
+import { useNavigate } from 'react-router-dom';
 
 function JumpButton({imageUrl,to,className}) {
+    const navigate = useNavigate();
+
     const handleClick = () => {
+        navigate(to); // 点击按钮时改变路由地址
         //history.push(to); // 点击按钮时改变路由地址
     };
 
