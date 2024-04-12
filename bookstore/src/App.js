@@ -17,8 +17,18 @@ function App() {
     // 更多书籍...
   ]);
 
+  const [person,setPerson] =useState({
+    id: 1,
+    name: "张三",
+    avatar:coverImageUrl,
+    level: 1,
+    age:12,
+    contact: "123456789",
+    introduction: "这是张三"
+  });
+
   return (
-      <AppRouter book={book} setBook={setBook}/>
+      <AppRouter book={book} setBook={setBook} person={person} setPerson={setPerson}/>
   );
 }
 export default App;

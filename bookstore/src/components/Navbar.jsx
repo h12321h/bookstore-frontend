@@ -8,7 +8,7 @@ import cart from '../img/shopping-cart.png';
 import order from '../img/orders.png';
 import home from '../img/home.png';
 
-function Navbar() {
+function Navbar({person}) {
     return (
         <div className="relative flex flex-row justify-center h-16 w-full mt-1">
             <img src={logo} alt="logo"
@@ -17,7 +17,7 @@ function Navbar() {
             <JumpButton imageUrl={home} to="/" className="flex absolute right-28 mr-32 mt-4"/>
             <JumpButton imageUrl={cart} to="/cart" className="flex absolute right-16 mr-32 mt-4"/>
             <JumpButton imageUrl={order} to="/orders" className="flex absolute right-6 mr-32 mt-4"/>
-            <ProfileButton/>
+            <ProfileButton person={person}/>
         </div>
     );
 }

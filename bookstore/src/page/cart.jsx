@@ -3,7 +3,7 @@ import CartBookList from "../components/CartBookList";
 import Countbar from "../components/Countbar";
 import {useEffect, useState} from "react";
 import coverImageUrl from "../img/bg.jpg";
-export default function CartPage({cartbook,setCartbook}) {
+export default function CartPage({cartbook,setCartbook,person}) {
 
     const [totalPrice,setTotalPrice] = useState(0);
     const [totalNum,setTotalNum]=useState(0);
@@ -56,7 +56,7 @@ export default function CartPage({cartbook,setCartbook}) {
             <div className="absolute w-full top-24 px-16  bg-gray-100">
                 <CartBookList cartbook={cartbook} handleCheck={handleCheck} handleQuantity={handleQuantity} handleDelete={handleDelete}/>
             </div>
-            <Navbar/>
+            <Navbar person={person}/>
             <Countbar handleSelectAll={handleSelectAll} totalNum={totalNum} totalPrice={totalPrice}/>
         </div>
     )
