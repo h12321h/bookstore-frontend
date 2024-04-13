@@ -3,24 +3,24 @@ import CartBookList from "../components/CartBookList";
 import Countbar from "../components/Countbar";
 import {useEffect, useState} from "react";
 import coverImageUrl from "../img/bg.jpg";
-export default function CartPage({cartbook,setCartbook,person}) {
+export default function CartPage({cartbook,setCartbook}) {
 
     const [totalPrice,setTotalPrice] = useState(0);
     const [totalNum,setTotalNum]=useState(0);
-    const handleCheck = (id,isChecked) => {
+    const handleCheck = (id,isChecked) => {//处理勾选框
         const newCartbook = cartbook.map(book =>
             book.id === id ? { ...book, checked: isChecked } : book
         );
         setCartbook(newCartbook);
     }
-    const handleQuantity = (id,quantity) => {
+    const handleQuantity = (id,quantity) => {//处理数量
         const newCartbook = cartbook.map(book =>
             book.id === id ? { ...book, quantity: quantity } : book
         );
         setCartbook(newCartbook);
     }
 
-    const handleSelectAll = (isSelectAll) => {
+    const handleSelectAll = (isSelectAll) => {//处理全选
         const newCartbook = cartbook.map(book => ({
             ...book,
             checked: isSelectAll
@@ -28,12 +28,11 @@ export default function CartPage({cartbook,setCartbook,person}) {
         setCartbook(newCartbook);
     }
 
-    useEffect(() => {
-        // 这个函数会在cartbook状态更新后调用
+    useEffect(() => {//购物车书籍改变
         handleCount();
-    }, [cartbook]); // 依赖数组里面包含了cartbook，意味着cartbook变化时会触发这个effect
+    }, [cartbook]);
 
-    const handleCount = () => {
+    const handleCount = () => {//处理总数和总价改变
         let totalprice = 0;
         let totalnum=0;
         cartbook.map(book => {
@@ -46,7 +45,7 @@ export default function CartPage({cartbook,setCartbook,person}) {
         setTotalNum(totalnum)
     }
 
-    const handleDelete = (id) => {
+    const handleDelete = (id) => {//处理删除购物车中的书籍
         const newCartbook = cartbook.filter(book => book.id !== id);
         setCartbook(newCartbook);
     }
@@ -54,9 +53,8 @@ export default function CartPage({cartbook,setCartbook,person}) {
     return (
         <div>
             <div className="absolute w-full top-24 px-16  bg-gray-100">
-                <CartBookList cartbook={cartbook} handleCheck={handleCheck} handleQuantity={handleQuantity} handleDelete={handleDelete}/>
+                <CartBookList cartbook={cartbook} handleCheck={handleCheck} handleQuantity={handleQuantity} handleDelete={handleDelete}/>//书籍列表
             </div>
-            <Navbar person={person}/>
             <Countbar handleSelectAll={handleSelectAll} totalNum={totalNum} totalPrice={totalPrice}/>
         </div>
     )

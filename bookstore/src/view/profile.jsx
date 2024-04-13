@@ -27,11 +27,11 @@ export default function ProfilePage({person, setPerson}) {
     const [loading, setLoading] = useState(false);
     const [tempPerson, setTempPerson] = useState(person);
 
-    const handleSave = () => {
+    const handleSave = () => {//处理保存按钮
         setPerson(tempPerson);
     }
 
-    const handleCancel = () => {
+    const handleCancel = () => {//处理取消按钮
         setTempPerson(person);
     }
 
@@ -71,7 +71,7 @@ export default function ProfilePage({person, setPerson}) {
                                 onChange={handleChange}>
                             <Button icon={<UploadOutlined/>} size="large" type="default">修改头像</Button>
                         </Upload>
-                    </Flex>
+                    </Flex>//头像和修改头像
                     <Flex vertical gap="large" labelFontSize="20" className="ml-36 mt-8">
                         <ConfigProvider
                             theme={{
@@ -133,14 +133,11 @@ export default function ProfilePage({person, setPerson}) {
                         </ConfigProvider>
 
 
-                    </Flex>
+                    </Flex>//昵称、联系方式、个人简介、保存和取消按钮
                 </Flex>
 
                 <div className="w-full h-20 bg-gray-100"></div>
 
-            </div>
-            <div className="fixed top-0 w-full h-20 bg-white flex flex-col items-center">
-                <Navbar person={person}/>
             </div>
         </div>
     )

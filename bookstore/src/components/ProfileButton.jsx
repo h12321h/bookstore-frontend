@@ -5,7 +5,7 @@ import {  Dropdown, ConfigProvider } from 'antd';
 
 function ProfileButton({person}) {
     const navigate = useNavigate();
-
+    //下拉菜单
     const items: MenuProps['items'] = [
         {
             key: '1',
@@ -45,7 +45,7 @@ function ProfileButton({person}) {
                 },
             }}
         >
-            <Dropdown menu={{items}} placement="bottomRight" arrow>
+            <Dropdown menu={{items}} placement="bottomRight" arrow>//下拉菜单
                 <button className="flex absolute right-0  mr-16 mt-4 ">
                     < img src={person.avatar} alt="user"
                           className="h-10 w-10 mr-6 rounded-full hover:shadow-lg transform hover:scale-105" />

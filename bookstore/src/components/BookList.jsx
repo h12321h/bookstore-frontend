@@ -3,10 +3,10 @@ import Book from "./Book";
 
 import coverImageUrl from "../img/bg.jpg";
 
-function BookList({books}) {
+function BookList({books,currentPage}) {
   return (
       <div className="booklist grid grid-cols-4 gap-4 place-items-center">
-          {books.map(book => (
+          {books.slice((currentPage-1)*12,currentPage*12).map(book => (
               <Book
                   key={book.id}
                     id={book.id}
