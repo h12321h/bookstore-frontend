@@ -14,7 +14,7 @@ export default function BookDetailPage({books, handleAdd}) {
         <div>
             <div className="relative flex flex-col w-full bg-gray-100">
                 <div className="absolute w-full top-24 px-16">
-                    <BackButton/>//返回按钮
+                    <BackButton/>
                 </div>
                 <BookDetail book={book} handleAdd={handleAdd}/>
             </div>

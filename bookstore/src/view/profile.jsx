@@ -71,7 +71,7 @@ export default function ProfilePage({person, setPerson}) {
                                 onChange={handleChange}>
                             <Button icon={<UploadOutlined/>} size="large" type="default">修改头像</Button>
                         </Upload>
-                    </Flex>//头像和修改头像
+                    </Flex>
                     <Flex vertical gap="large" labelFontSize="20" className="ml-36 mt-8">
                         <ConfigProvider
                             theme={{
@@ -133,7 +133,7 @@ export default function ProfilePage({person, setPerson}) {
                         </ConfigProvider>
 
 
-                    </Flex>//昵称、联系方式、个人简介、保存和取消按钮
+                    </Flex>
                 </Flex>
 
                 <div className="w-full h-20 bg-gray-100"></div>

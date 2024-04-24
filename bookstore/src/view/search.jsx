@@ -13,7 +13,7 @@ export default function SearchPage({book,page,setPage}) {
     const searchTerm = query.get('query');
 
     const searchBook = book.filter(book => {//筛选符合条件的书籍
-        if(searchType === 'name'){
+        if(searchType === 'title'){
             return book.title.toLowerCase().includes(searchTerm.toLowerCase());
         }else if(searchType === 'author'){
             return book.author.toLowerCase().includes(searchTerm.toLowerCase());

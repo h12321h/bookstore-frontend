@@ -53,7 +53,7 @@ export default function CartPage({cartbook,setCartbook}) {
     return (
         <div>
             <div className="absolute w-full top-24 px-16  bg-gray-100">
-                <CartBookList cartbook={cartbook} handleCheck={handleCheck} handleQuantity={handleQuantity} handleDelete={handleDelete}/>//书籍列表
+                <CartBookList cartbook={cartbook} handleCheck={handleCheck} handleQuantity={handleQuantity} handleDelete={handleDelete}/>
             </div>
             <Countbar handleSelectAll={handleSelectAll} totalNum={totalNum} totalPrice={totalPrice}/>
         </div>

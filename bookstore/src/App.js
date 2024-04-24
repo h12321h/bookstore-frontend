@@ -1,7 +1,7 @@
 import logo from './logo.svg';
 import './css/style.css'
 import './css/output.css'
-import AppRouter from './components/router';
+import AppRouter from './Router/router';
 import {useState} from "react";
 import coverImageUrl from "./img/bg.jpg";
 

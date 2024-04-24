@@ -15,8 +15,8 @@ export default function HomePage({book,page,setPage}) {
     return (
         <div>
             <div className="absolute w-full top-24 px-16  bg-gray-100">
-                <BookList books={book} currentPage={page}/>//书籍列表
-                <PageChange currentPage={page} handlePageChange={handlePageChange}/>//页面切换
+                <BookList books={book} currentPage={page}/>
+                <PageChange currentPage={page} handlePageChange={handlePageChange}/>
             </div>
         </div>
     );
