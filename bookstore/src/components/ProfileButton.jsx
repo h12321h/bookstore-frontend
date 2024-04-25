@@ -26,7 +26,7 @@ function ProfileButton({person}) {
         {
             key: '3',
             label: (
-                <button onClick={() => {navigate('/profile')}}>
+                <button onClick={() => {navigate('/login')}}>
                     退出登录
                 </button>
             ),

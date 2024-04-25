@@ -1,4 +1,4 @@
-import {BrowserRouter, Route, BrowserRouter as Router, Routes} from "react-router-dom";
+import {BrowserRouter, Route, BrowserRouter as Router, Routes,Navigate,useNavigate} from "react-router-dom";
 import HomePage from "../view/home";
 import CartPage from "../view/cart";
 import BookDetailPage from "../view/bookdetail";
@@ -27,24 +27,36 @@ export default function AppRouter({book, setBook, person, setPerson}) {
 
     //页面
     const [page, setPage] = useState(1);
+
+
+
     return (
         <Router>
             <Routes>
-                <Route path="/login" element={<LoginPage />} /> {/* 登录页 */}
+                <Route path="/login" element={<LoginPage person={person} setPerson={setPerson}/>}/> {/* 登录页 */}
                 <Route
                     path="/*"
                     element={
-                        <>
-                            {/* 如果不是登录页面，则渲染NavBar */}
-                            <Routes>
-                                <Route index element={<HomePage book={book} page={page} setPage={setPage} />} /> {/* 首页 */}
-                                <Route path="/cart" element={<CartPage cartbook={cartbook} setCartbook={setCartbook} />} /> {/* 购物车页 */}
-                                <Route path="/profile" element={<ProfilePage person={person} setPerson={setPerson} />} /> {/* 个人信息页 */}
-                                <Route path="/book/:id" element={<BookDetailPage books={book} handleAdd={handleAdd} />} /> {/* 书籍详情页 */}
-                                <Route path="/search" element={<SearchPage book={book} page={page} setPage={setPage} />} /> {/* 搜索页 */}
-                            </Routes>
-                            <Navbar person={person} />
-                        </>
+                        person.isLogin === true ? (
+                            <>
+                                {/* 如果不是登录页面，则渲染NavBar */}
+                                <Routes>
+                                    <Route index element={<HomePage book={book} page={page}
+                                                                    setPage={setPage}/>}/> {/* 首页 */}
+                                    <Route path="/cart" element={<CartPage cartbook={cartbook}
+                                                                           setCartbook={setCartbook}/>}/> {/* 购物车页 */}
+                                    <Route path="/profile" element={<ProfilePage person={person}
+                                                                                 setPerson={setPerson}/>}/> {/* 个人信息页 */}
+                                    <Route path="/book/:id" element={<BookDetailPage books={book}
+                                                                                     handleAdd={handleAdd}/>}/> {/* 书籍详情页 */}
+                                    <Route path="/search" element={<SearchPage book={book} page={page}
+                                                                               setPage={setPage}/>}/> {/* 搜索页 */}
+                                </Routes>
+                                <Navbar person={person}/>
+                            </>
+                        ) : (
+                           <Navigate to="/login"/>
+                        )
                     }
                 />
             </Routes>

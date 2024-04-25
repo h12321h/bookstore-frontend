@@ -28,12 +28,14 @@ function App() {
 
   const [person,setPerson] =useState({
     id: 1,
-    name: "张三",
+    name: "12321",
     avatar:coverImageUrl,
     level: 1,
     age:12,
     contact: "123456789",
-    introduction: "这是张三的简介"
+    introduction: "这是张三的简介",
+    password: "123212321",
+    isLogin: false
   });
 
   return (
