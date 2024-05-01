@@ -5,6 +5,7 @@ import BookDetailPage from "../view/bookdetail";
 import ProfilePage from "../view/profile";
 import SearchPage from "../view/search";
 import LoginPage from "../view/login";
+import OrderPage from "../view/order";
 import {useState} from "react";
 import Navbar from "../components/Navbar";
 
@@ -51,6 +52,7 @@ export default function AppRouter({book, setBook, person, setPerson}) {
                                                                                      handleAdd={handleAdd}/>}/> {/* 书籍详情页 */}
                                     <Route path="/search" element={<SearchPage book={book} page={page}
                                                                                setPage={setPage}/>}/> {/* 搜索页 */}
+                                    <Route path="/orders" element={<OrderPage/>} /> {/* 订单页 */}
                                 </Routes>
                                 <Navbar person={person}/>
                             </>

@@ -1,5 +1,5 @@
 
-export default function Countbar({handleSelectAll,totalNum,totalPrice}) {
+export default function Countbar({handleSelectAll,totalNum,totalPrice,handleBuy}){
     console.log(totalNum,totalPrice);
     return(
         <div className="fixed bottom-0 w-full h-16 bg-blue-100 flex flex-row items-center">
@@ -12,8 +12,8 @@ export default function Countbar({handleSelectAll,totalNum,totalPrice}) {
             <p className="ml-1 text-gray-400">件</p>
             <p className="ml-12">合计：</p>
             <p className=" text-xl text-blue-800">{'¥'+totalPrice}</p>
-            <button className="ml-24 bg-blue-900 w-32 h-12 rounded-lg shadow-lg text-white hover:bg-blue-950 ml-4">结
-                算
+            <button className="ml-24 bg-blue-900 w-32 h-12 rounded-lg shadow-lg text-white hover:bg-blue-950 ml-4" onClick={handleBuy}>
+                结 算
             </button>
         </div>
     )
