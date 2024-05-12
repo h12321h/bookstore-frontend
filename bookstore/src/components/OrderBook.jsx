@@ -1,27 +1,30 @@
 import trash from '../img/trash.png';
 import {useNavigate} from "react-router-dom";
+import Table from "./Table";
 
-export default function OrderBook({book}) {
-    console.log(book);
+export default function OrderBook({order}) {
+    const columns = [
+        { header: 'Title', accessor: 'title' },
+        { header: 'Price', accessor: 'price' },
+        { header: 'Quantity', accessor: 'quantity' },
+    ];
+    console.log(order);
     const navigate = useNavigate();
-    const handle2detail = () => {
-        navigate('/book/' + book.id);
+    const handle2detail = (id) => {
+        navigate('/book/' + id);
     }
     return (
-            <div className="flex flex-row items-center bg-white h-40 rounded-lg mt-8 mx-8  hover:shadow-lg">
-                <img src={`http://localhost:8080/${book.coverImage}`} className="ml-32 h-32 rounded-lg"/>
-                <div className="flex flex-col ml-48 text-left h-32">
-                    <button className="text-2xl mt-8 text-left hover:text-blue-900"
-                            onClick={handle2detail}>{book.title}</button>
-                    <p className="mt-4 text-xs text-gray-400">{book.author}</p>
+        <div className="flex flex-col items-center bg-white rounded-lg mt-8 mx-8  hover:shadow-lg">
+            <div className="flex flex-row mt-4 w-full items-center">
+                {/*<p className="ml-8 text-2xl mr-auto">{order.orderDate}</p>*/}
+                <div className="flex-col mr-16">
+                    <p className="mr-8 text-2xl text-blue-800">{'¥' + order.totalPrice}</p>
+                    <p className="mr-8 text-l">{order.status}</p>
                 </div>
-                <p className="ml-56 text-xl text-blue-800">{'¥' + book.price}</p>
-                <input disabled
-                       type="number"
-                       className="w-12 h-10 ml-56 border-2 border-blue-400 rounded-lg text-center"
-                       value={book.quantity}
-                />
+
             </div>
+            <Table data={order.orderItems} columns={columns}/>
+        </div>
 
 
     );

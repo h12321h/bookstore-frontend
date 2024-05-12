@@ -2,13 +2,23 @@ import Navbar from "../components/Navbar";
 import {useNavigate,useParams} from "react-router-dom";
 import BackButton from "../components/BackButton";
 import BookDetail from "../components/BookDetail";
+import {useEffect,useState} from "react";
+import {getBookById} from "../service/book";
 
-export default function BookDetailPage({books, handleAdd}) {
+export default function BookDetailPage({handleAdd}) {
+    const [book, setBook] = useState({});
+
     let { id } = useParams(); // 获取URL参数
     id = parseInt(id, 10); // 确保id是数字类型
-    console.log(books);
-    const book = books.find(book => book.id === id); // 通过id查找对应的book
-    console.log(book);
+
+    const getBook = async (id) => {
+        const data = await getBookById(id);
+        setBook(data);
+    }
+
+    useEffect(() => {
+        getBook(id);
+    },[id]);
 
     return(
         <div>
@@ -16,7 +26,7 @@ export default function BookDetailPage({books, handleAdd}) {
                 <div className="absolute w-full top-24 px-16">
                     <BackButton/>
                 </div>
-                <BookDetail book={book} handleAdd={handleAdd}/>
+                <BookDetail book={book}/>
             </div>
         </div>
     )

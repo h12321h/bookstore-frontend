@@ -10,7 +10,7 @@ function BookList({books,currentPage}) {
               <Book
                   key={book.id}
                     id={book.id}
-                  coverImageUrl={book.coverImageUrl}
+                  cover_image={book.cover_image}
                   title={book.title}
                   author={book.author}
                   price={book.price}

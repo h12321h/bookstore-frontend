@@ -14,6 +14,29 @@
 @tailwind components;
 @tailwind utilities;
 
+/* src/TableComponent.css */
+.styled-table {
+  width: 90%; /* Make the table fill the width */
+  border-collapse: collapse; /* Collapse borders */
+  margin: 20px 0; /* Add some margin around the table */
+}
+
+.styled-table, .styled-header, .styled-cell {
+  border: 1px solid #ddd; /* Add a border to the table, headers, and cells */
+}
+
+.styled-header {
+  padding: 12px; /* Add padding for better spacing */
+  background-color: #f2f2f2; /* Light gray background for headers */
+  text-align: left; /* Left align the text */
+  font-weight: bold; /* Make the header text bold */
+}
+
+.styled-cell {
+  padding: 12px; /* Add padding to the cells */
+}
+
+
 #components-form-demo-normal-login{
   width: 100%;
 }
