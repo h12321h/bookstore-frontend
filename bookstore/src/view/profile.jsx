@@ -2,7 +2,9 @@ import {UploadOutlined} from '@ant-design/icons';
 import {message,Button, ConfigProvider, Upload, Flex, Image, Input, Form} from 'antd';
 import Navbar from "../components/Navbar";
 import BackButton from "../components/BackButton";
-import {useState} from "react";
+import {useEffect, useState} from "react";
+import {getUser} from "../service/user";
+import {getBooks} from "../service/book";
 
 const getBase64 = (img, callback) => {
     const reader = new FileReader();
@@ -23,9 +25,21 @@ const beforeUpload = (file) => {
     }
     return isJpgOrPng && isLt2M;
 };
-export default function ProfilePage({person, setPerson}) {
+export default function ProfilePage() {
     const [loading, setLoading] = useState(false);
-    const [tempPerson, setTempPerson] = useState(person);
+    const [person,setPerson] = useState({});
+    const [tempPerson, setTempPerson] = useState({});
+
+    const initPerson =async () => {
+        const data = await getUser(localStorage.getItem('userId'));
+        setPerson(data);
+        setTempPerson(data);
+    }
+
+    useEffect(() => {
+        initPerson();
+
+    }, []);
 
     const handleSave = () => {//处理保存按钮
         setPerson(tempPerson);

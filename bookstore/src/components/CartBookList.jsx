@@ -11,9 +11,7 @@ export default function CartBookList({cartbook,handleCheck,handleQuantity,handle
                     <CartBook
                         key={cart.id}
                         id={cart.id}
-                        coverImageUrl={cart.book.cover_image}
-                        title={cart.book.title}
-                        price={cart.book.price}
+                        book={cart.book}
                         checked={cart.checked}
                         onCheck={handleCheck}
                         quantity={cart.quantity}

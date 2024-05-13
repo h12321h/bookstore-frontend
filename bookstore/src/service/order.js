@@ -23,3 +23,15 @@ export async function addOrder(userId,items){
         .then(response => response.text())
         .catch(error => console.error('Error adding order:', error));
 }
+
+export async function deleteOrder(id){
+    return fetch(`${PREFIX}/order/delete`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: id
+    })
+        .then(response => response.text())
+        .catch(error => console.error('Error deleting order:', error));
+}

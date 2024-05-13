@@ -2,25 +2,37 @@
 import BookList from '../components/BookList';
 import { useLocation } from 'react-router-dom';
 import PageChange from "../components/PageChange";
+import {getBookByAuthor,getBookByPublisher,getBookByTitle} from "../service/book";
+import {useState,useEffect} from "react";
 
 function useQuery() {
     return new URLSearchParams(useLocation().search);
 }
 
-export default function SearchPage({book,page,setPage}) {
+export default function SearchPage({page,setPage}) {
     const query = useQuery();
     const searchType = query.get('type');//解析url
     const searchTerm = query.get('query');
 
-    const searchBook = book.filter(book => {//筛选符合条件的书籍
+
+    const [searchBook, setSearchBook] = useState([]);
+
+    const initSearch = async () => {
         if(searchType === 'title'){
-            return book.title.toLowerCase().includes(searchTerm.toLowerCase());
-        }else if(searchType === 'author'){
-            return book.author.toLowerCase().includes(searchTerm.toLowerCase());
-        }else if(searchType === 'publisher') {
-            return book.publisher.toLowerCase().includes(searchTerm.toLowerCase());
+            getBookByTitle(searchTerm).then(data => setSearchBook(data));
         }
-    });
+        if(searchType === 'author'){
+            getBookByAuthor(searchTerm).then(data => setSearchBook(data));
+        }
+        if(searchType === 'publisher'){
+            getBookByPublisher(searchTerm).then(data => setSearchBook(data));
+        }
+    }
+
+    useEffect(() => {
+        initSearch();
+    },[searchTerm,searchType]);
+
     const handlePageChange = (newPage) => {//处理页面切换
         if(newPage>=1&&((newPage-1)*12<searchBook.length)){
             setPage(newPage);

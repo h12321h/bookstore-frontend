@@ -91,7 +91,7 @@ export default function CartPage() {
                     console.log(cart.id);
                     deleteBookFromCart(cart.id);
                 });
-                setCartbook(cartbook.filter(book => !buybook.some(buy => buy.bookId === book.id)));
+                setCartbook(cartbook.filter(cart => !buybook.some(buy => buy.bookId === cart.book.id)));
                 notification.success({
                     message: '订单确认',
                 });

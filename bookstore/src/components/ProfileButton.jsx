@@ -1,10 +1,27 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
 import type { MenuProps} from 'antd';
 import {  Dropdown, ConfigProvider } from 'antd';
+import{useState} from "react";
+import{getUser} from "../service/user";
 
-function ProfileButton({person}) {
+
+function ProfileButton() {
     const navigate = useNavigate();
+
+    const [person,setPerson] = useState({});
+
+    const initPerson =async () => {
+        getUser(localStorage.getItem('userId')).then(data => setPerson(data));
+        console.log(person);
+    }
+
+    useEffect(() => {
+        console.log(localStorage.getItem('userId'));
+        initPerson();
+    }, []);
+
+
     //下拉菜单
     const items: MenuProps['items'] = [
         {

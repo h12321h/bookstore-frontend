@@ -10,34 +10,31 @@ import {useState} from "react";
 import Navbar from "../components/Navbar";
 
 
-export default function AppRouter({book, setBook, person, setPerson}) {
+export default function AppRouter({}) {
     //页面
     const [page, setPage] = useState(1);
-
-
 
     return (
         <Router>
             <Routes>
-                <Route path="/login" element={<LoginPage person={person} setPerson={setPerson}/>}/> {/* 登录页 */}
+                <Route path="/login" element={<LoginPage />}/> {/* 登录页 */}
                 <Route
                     path="/*"
                     element={
-                        person.isLogin === true ? (
+                        localStorage.getItem("isLogin") === 'true' ? (
                             <>
                                 {/* 如果不是登录页面，则渲染NavBar */}
                                 <Routes>
                                     <Route index element={<HomePage page={page}
                                                                     setPage={setPage}/>}/> {/* 首页 */}
                                     <Route path="/cart" element={<CartPage />}/> {/* 购物车页 */}
-                                    <Route path="/profile" element={<ProfilePage person={person}
-                                                                                 setPerson={setPerson}/>}/> {/* 个人信息页 */}
+                                    <Route path="/profile" element={<ProfilePage />}/> {/* 个人信息页 */}
                                     <Route path="/book/:id" element={<BookDetailPage />}/> {/* 书籍详情页 */}
-                                    <Route path="/search" element={<SearchPage book={book} page={page}
+                                    <Route path="/search" element={<SearchPage page={page}
                                                                                setPage={setPage}/>}/> {/* 搜索页 */}
                                     <Route path="/orders" element={<OrderPage/>} /> {/* 订单页 */}
                                 </Routes>
-                                <Navbar person={person}/>
+                                <Navbar />
                             </>
                         ) : (
                            <Navigate to="/login"/>

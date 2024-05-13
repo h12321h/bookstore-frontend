@@ -3,27 +3,29 @@ import {Flex, notification} from 'antd';
 import bgImage from '../img/bg.jpg';
 import {useNavigate} from "react-router-dom";
 import {useEffect} from "react";
+import {login} from "../service/login";
 
-export default function LoginPage({person,setPerson}) {
+export default function LoginPage() {
     const navigate = useNavigate();
     const handleLogin = (values) => {
-        console.log(values);
-        console.log(person.name, person.password);
-        if (values.username === person.name && values.password === person.password) {
-            setPerson({...person, isLogin: true});
-            notification.success({
-                message: '登录成功',
-                description: '欢迎回来！',
-            });
-            navigate('/');
-            return true;
-        }
-        return false;
+        login(values.username,values.password).then(data => {
+            const userId = parseInt(data, 10);
+            if (userId > 0) {
+                localStorage.setItem("userId", userId);
+                localStorage.setItem("isLogin", true);
+                navigate("/");
+                notification.success({
+                    message: '登录成功',
+                    description: '欢迎回来'
+                });
+            } else {
+                notification.error({
+                    message: '登录失败',
+                    description: data.msg
+                });
+            }
+        });
     }
-
-    useEffect(() => {
-        setPerson({...person,isLogin: false});
-    }, []);
 
     const backgroundStyle = {
         backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.1)), url(${bgImage})`,

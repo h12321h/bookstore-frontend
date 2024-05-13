@@ -9,7 +9,7 @@ import cart from '../img/shopping-cart.png';
 import order from '../img/orders.png';
 import home from '../img/home.png';
 
-function Navbar({person}) {
+function Navbar() {
     const navigate = useNavigate();
     return (
         <div className="fixed top-0 w-full h-20 bg-white flex flex-col items-center">
@@ -22,7 +22,7 @@ function Navbar({person}) {
                 <JumpButton imageUrl={home} to="/" className="flex absolute right-28 mr-32 mt-4"/>
                 <JumpButton imageUrl={cart} to="/cart" className="flex absolute right-16 mr-32 mt-4"/>
                 <JumpButton imageUrl={order} to="/orders" className="flex absolute right-6 mr-32 mt-4"/>
-                <ProfileButton person={person}/>
+                <ProfileButton />
             </div>
         </div>
     );

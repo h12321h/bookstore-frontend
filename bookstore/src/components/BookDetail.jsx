@@ -1,11 +1,49 @@
 import BackButton from "./BackButton";
 import {addBookToCart} from "../service/cart";
+import {notification} from "antd";
+import {addOrder} from "../service/order";
 
 export default function BookDetail({book}){
     const handleAdd = async (bookId) => {
         const userId = 1;
         const data = await addBookToCart(userId,bookId);
+        if(data==="success"){
+            notification.success({
+                message: '成功',
+                description: '成功加入购物车',
+                placement: 'topRight'
+            });
+        }
+        if(data==="add"){
+            notification.success({
+                message: '成功',
+                description: '书籍已在购物车中，数量+1',
+                placement: 'topRight'
+            });
+        }
     }
+
+    const handleBuy = async () => {
+        let buybook = [{
+            bookId: book.id,
+            quantity: 1,
+            price: book.price
+        }];
+        const userId = 1;
+        const status = await addOrder(userId, buybook);
+        if (status === "订单确认") {
+            notification.success({
+                message: '订单确认',
+            });
+        } else {
+            notification.error({
+                message: '订单处理异常',
+                description: '未能确认订单，请稍后重试'
+            });
+        }
+    }
+
+
     //console.log(book);
     return(
         <div className="flex flex-row mt-28 ">
@@ -33,7 +71,7 @@ export default function BookDetail({book}){
                 <div className="flex flex-row mt-16 ">
                     <button className="bg-blue-900 w-40 h-12 rounded-lg text-white hover:bg-blue-950 focus:outline-none"
                             onClick={e=>handleAdd(book.id)}>加入购物车</button>
-                    <button className="bg-blue-900 w-40 h-12 rounded-lg text-white hover:bg-blue-950 focus:outline-none ml-16">立即购买</button>
+                    <button className="bg-blue-900 w-40 h-12 rounded-lg text-white hover:bg-blue-950 focus:outline-none ml-16" onClick={handleBuy}>立即购买</button>
                 </div>
             </div>
         </div>

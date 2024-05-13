@@ -9,13 +9,7 @@ const Context = React.createContext({
 
 export default function LoginForm({handleLogin}) {
     const onFinish = (values) => {
-        if(!handleLogin(values)){
-            console.log('Failed:', values);
-            notification.error({
-                message: '登录失败',
-                description: '用户名或密码不正确，请重试。',
-            });
-        }
+        handleLogin(values);
     };
 
     return (

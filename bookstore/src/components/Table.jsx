@@ -2,6 +2,7 @@
 import React from 'react';
 
 const TableComponent = ({ data, columns }) => {
+    console.log(data);
     return (
         <table className="styled-table">
             <thead>

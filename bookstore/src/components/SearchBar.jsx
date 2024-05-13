@@ -5,7 +5,7 @@ import {useNavigate} from "react-router-dom";
 
 function SearchBar() {
     const [searchValue, setSearchValue] = useState("");
-    const [searchType, setSearchType] = useState("name");
+    const [searchType, setSearchType] = useState("title");
     const navigate = useNavigate();
 
     const handleKeyDown = (e) => {//按下回车键搜索

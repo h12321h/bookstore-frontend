@@ -5,7 +5,7 @@ import BookDetail from "../components/BookDetail";
 import {useEffect,useState} from "react";
 import {getBookById} from "../service/book";
 
-export default function BookDetailPage({handleAdd}) {
+export default function BookDetailPage() {
     const [book, setBook] = useState({});
 
     let { id } = useParams(); // 获取URL参数

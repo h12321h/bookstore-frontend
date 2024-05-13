@@ -11,3 +11,22 @@ export async function getBookById(id) {
         .then(response => response.json())
         .catch(error => console.error('Error fetching book:', error));
 }
+
+export async function getBookByTitle(title) {
+    return fetch(`${PREFIX}/search/title/${title}`)
+        .then(response => response.json())
+        .catch(error => console.error('Error fetching book:', error));
+}
+
+export async function getBookByAuthor(author) {
+    return fetch(`${PREFIX}/search/author/${author}`)
+        .then(response => response.json())
+        .catch(error => console.error('Error fetching book:', error));
+}
+
+export async function getBookByPublisher(publisher) {
+    return fetch(`${PREFIX}/search/publisher/${publisher}`)
+        .then(response => response.json())
+        .catch(error => console.error('Error fetching book:', error));
+}
+
