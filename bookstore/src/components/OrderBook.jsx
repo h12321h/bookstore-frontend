@@ -31,6 +31,12 @@ export default function OrderBook({order,onDelete}) {
                 </button>
 
             </div>
+            <div className="flex flex-row mt-0 w-full items-center">
+                <p className="ml-12 text-2xl text-blue-800">{order.name}</p>
+                <p className="ml-16 text-l text-gray-500">{order.phone}</p>
+                <p className="ml-16 text-l text-gray-500">{order.address}</p>
+            </div>
+
             <Table data={order.items} columns={columns}/>
         </div>
 

@@ -12,13 +12,13 @@ export async function getOrders(userId) {
         .catch(error => console.error('Error fetching cart:', error));
 }
 
-export async function addOrder(userId,items){
+export async function addOrder(userId,name,phone,address,items){
     return fetch(`${PREFIX}/order/add`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ userId, items})
+        body: JSON.stringify({ userId,name,phone,address,items})
         })
         .then(response => response.text())
         .catch(error => console.error('Error adding order:', error));

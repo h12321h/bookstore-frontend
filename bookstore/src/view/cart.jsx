@@ -6,12 +6,28 @@ import coverImageUrl from "../img/bg.jpg";
 import {notification} from "antd";
 import {getCart,updateBookQuantity,deleteBookFromCart} from "../service/cart";
 import {addOrder} from "../service/order";
+import { Button,Modal,Input } from 'antd';
 
 export default function CartPage() {
     const [cartbook, setCartbook] = useState([]);
 
     const [totalPrice, setTotalPrice] = useState(0);
     const [totalNum, setTotalNum] = useState(0);
+
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const [name, setName] = useState("");
+    const [phone, setPhone] = useState("");
+    const [address, setAddress] = useState("");
+    const showModal = () => {
+        setIsModalOpen(true);
+    };
+    const handleOk = () => {
+        setIsModalOpen(false);
+    };
+    const handleCancel = () => {
+        setIsModalOpen(false);
+    };
 
     const initCart = async () => {//从后端抓取购物车数据
         const data= await getCart(1);
@@ -73,6 +89,8 @@ export default function CartPage() {
         setCartbook(newCartbook);
     }
 
+
+
     const handleBuy = async () => { // Make the function async
         try {
             const buybook = cartbook.filter(book => book.checked)
@@ -84,7 +102,7 @@ export default function CartPage() {
 
             console.log(buybook);
             const userId = 1;
-            const status = await addOrder(userId, buybook); // Use await to get the actual result
+            const status = await addOrder(userId, name,phone,address,buybook); // Use await to get the actual result
 
             if (status === "订单确认") {
                 cartbook.filter(book => book.checked).map(cart =>{
@@ -92,6 +110,10 @@ export default function CartPage() {
                     deleteBookFromCart(cart.id);
                 });
                 setCartbook(cartbook.filter(cart => !buybook.some(buy => buy.bookId === cart.book.id)));
+                setName("");
+                setPhone("");
+                setAddress("");
+                setIsModalOpen(false);
                 notification.success({
                     message: '订单确认',
                 });
@@ -117,7 +139,28 @@ export default function CartPage() {
                               handleDelete={handleDelete}/>
             </div>
             <Countbar handleSelectAll={handleSelectAll} totalNum={totalNum} totalPrice={totalPrice}
-                      handleBuy={handleBuy}/>
+                      handleBuy={showModal}/>
+            <Modal title="确定订单信息" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}
+                   footer={[
+                       <Button key="取消" onClick={handleCancel}>
+                           Return
+                       </Button>,
+                       <Button key="提交" onClick={handleBuy}>
+                           Submit
+                       </Button>,
+                   ]}
+            >
+                <div className="h-4"></div>
+                <p>收货人</p>
+                <Input placeholder="Name" value={name} onChange={e=>{setName(e.target.value)}}/>
+                <div className="h-8"></div>
+                <p>联系电话</p>
+                <Input placeholder="Phone Number" value={phone} onChange={e=>{setPhone(e.target.value)}}/>
+                <div className="h-8"></div>
+                <p>收货地址</p>
+                <Input placeholder="Address" value={address} onChange={e=>{setAddress(e.target.value)}}/>
+                <div className="h-4"></div>
+            </Modal>
         </div>
     )
 }
