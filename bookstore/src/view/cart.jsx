@@ -7,6 +7,7 @@ import {notification} from "antd";
 import {getCart,updateBookQuantity,deleteBookFromCart} from "../service/cart";
 import {addOrder} from "../service/order";
 import { Button,Modal,Input } from 'antd';
+import {getCookie} from "../service/cookie";
 
 export default function CartPage() {
     const [cartbook, setCartbook] = useState([]);
@@ -101,7 +102,7 @@ export default function CartPage() {
                 }));
 
             console.log(buybook);
-            const userId = 1;
+            const userId = getCookie();
             const status = await addOrder(userId, name,phone,address,buybook); // Use await to get the actual result
 
             if (status === "订单确认") {

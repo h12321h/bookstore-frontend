@@ -6,7 +6,8 @@ export async function getOrders(userId) {
         headers: {
             'Content-Type': 'application/json', // 指定内容类型为 JSON
         },
-        body:userId // 将数据转换为 JSON 字符串
+        body:userId ,
+        credentials: 'include'  // 在这里添加
     })
         .then(response => response.json())
         .catch(error => console.error('Error fetching cart:', error));
@@ -15,6 +16,7 @@ export async function getOrders(userId) {
 export async function addOrder(userId,name,phone,address,items){
     return fetch(`${PREFIX}/order/add`, {
         method: 'POST',
+        credentials: 'include',
         headers: {
             'Content-Type': 'application/json'
         },
@@ -30,7 +32,8 @@ export async function deleteOrder(id){
         headers: {
             'Content-Type': 'application/json'
         },
-        body: id
+        body: id,
+        credentials: 'include'  // 在这里添加
     })
         .then(response => response.text())
         .catch(error => console.error('Error deleting order:', error));

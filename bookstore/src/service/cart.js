@@ -3,6 +3,7 @@ import {PREFIX} from "./config";
 export async function getCart(userId) {
     return fetch(`${PREFIX}/cart`, {
         method: 'POST', // 使用 POST 方法
+        credentials: 'include', // 确保请求中包含 Cookie
         headers: {
             'Content-Type': 'application/json', // 指定内容类型为 JSON
         },
@@ -15,6 +16,7 @@ export async function getCart(userId) {
 export async function addBookToCart(userId,bookId){
     return fetch(`${PREFIX}/cart/add`, {
         method: 'POST',
+        credentials: 'include',
         headers: {
             'Content-Type': 'application/json'
         },
@@ -27,6 +29,7 @@ export async function addBookToCart(userId,bookId){
 export async function updateBookQuantity(id,quantity){
     return fetch(`${PREFIX}/cart/update`, {
         method: 'POST',
+        credentials: 'include',
         headers: {
             'Content-Type': 'application/json'
         },
@@ -39,6 +42,7 @@ export async function updateBookQuantity(id,quantity){
 export async function deleteBookFromCart(id){
     return fetch(`${PREFIX}/cart/delete`, {
         method: 'POST',
+        credentials: 'include',
         headers: {
             'Content-Type': 'application/json'
         },

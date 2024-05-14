@@ -14,14 +14,16 @@ export default function AppRouter({}) {
     //页面
     const [page, setPage] = useState(1);
 
+    const[isLogin,setIsLogin]=useState(false);
+
     return (
         <Router>
             <Routes>
-                <Route path="/login" element={<LoginPage />}/> {/* 登录页 */}
+                <Route path="/login" element={<LoginPage isLogin={isLogin} setIsLogin={setIsLogin}/>}/> {/* 登录页 */}
                 <Route
                     path="/*"
                     element={
-                        localStorage.getItem("isLogin") === 'true' ? (
+                        isLogin === true ? (
                             <>
                                 {/* 如果不是登录页面，则渲染NavBar */}
                                 <Routes>

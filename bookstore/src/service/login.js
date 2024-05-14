@@ -7,6 +7,7 @@ export async function login(username, password) {
 
     return fetch(`${PREFIX}/login`, {
         method: 'POST',
+        credentials: 'include',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
         },

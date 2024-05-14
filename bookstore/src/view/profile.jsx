@@ -5,6 +5,7 @@ import BackButton from "../components/BackButton";
 import {useEffect, useState} from "react";
 import {getUser} from "../service/user";
 import {getBooks} from "../service/book";
+import {getCookie} from "../service/cookie";
 
 const getBase64 = (img, callback) => {
     const reader = new FileReader();
@@ -31,7 +32,7 @@ export default function ProfilePage() {
     const [tempPerson, setTempPerson] = useState({});
 
     const initPerson =async () => {
-        const data = await getUser(localStorage.getItem('userId'));
+        const data = await getUser(getCookie());
         setPerson(data);
         setTempPerson(data);
     }

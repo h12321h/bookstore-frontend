@@ -3,12 +3,13 @@ import {useEffect, useState} from "react";
 import OrderBook from "../components/OrderBook";
 import coverImageUrl from "../img/bg.jpg";
 import {deleteOrder, getOrders} from "../service/order";
+import {getCookie} from "../service/cookie";
 
 export default function OrderPage() {
     const [orders, setOrders] = useState([]);
 
     const initOrders = async () => {
-        const userId = 1;
+        const userId = getCookie();
         const data = await getOrders(userId);
         console.log(data);
         setOrders(data);

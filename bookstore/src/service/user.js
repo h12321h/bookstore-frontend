@@ -7,7 +7,8 @@ export async function getUser(id){
         headers: {
             'Content-Type': 'application/json'
         },
-        body: id
+        body: id,
+        credentials: 'include',  // 在这里添加
     })
         .then(response => response.json())
         .catch(error => console.error('Error fetching user:', error));

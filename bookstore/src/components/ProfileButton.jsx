@@ -4,6 +4,7 @@ import type { MenuProps} from 'antd';
 import {  Dropdown, ConfigProvider } from 'antd';
 import{useState} from "react";
 import{getUser} from "../service/user";
+import {getCookie} from "../service/cookie";
 
 
 function ProfileButton() {
@@ -12,7 +13,8 @@ function ProfileButton() {
     const [person,setPerson] = useState({});
 
     const initPerson =async () => {
-        getUser(localStorage.getItem('userId')).then(data => setPerson(data));
+        console.log("cookie",getCookie());
+        getUser(getCookie()).then(data => setPerson(data));
         console.log(person);
     }
 

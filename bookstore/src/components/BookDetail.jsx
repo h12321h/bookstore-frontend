@@ -3,6 +3,7 @@ import {addBookToCart} from "../service/cart";
 import {Button, Input, Modal, notification} from "antd";
 import {addOrder} from "../service/order";
 import {useState} from "react";
+import{getCookie} from "../service/cookie";
 
 export default function BookDetail({book}) {
 
@@ -24,7 +25,7 @@ export default function BookDetail({book}) {
 
 
     const handleAdd = async (bookId) => {
-        const userId = 1;
+        const userId = getCookie();
         const data = await addBookToCart(userId, bookId);
         if (data === "success") {
             notification.success({
@@ -48,7 +49,7 @@ export default function BookDetail({book}) {
             quantity: 1,
             price: book.price
         }];
-        const userId = 1;
+        const userId = getCookie();
         const status = await addOrder(userId, name, phone, address, buybook); // Use await to get the actual result
 
         if (status === "订单确认") {

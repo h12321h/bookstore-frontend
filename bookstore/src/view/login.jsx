@@ -4,24 +4,25 @@ import bgImage from '../img/bg.jpg';
 import {useNavigate} from "react-router-dom";
 import {useEffect} from "react";
 import {login} from "../service/login";
+import {setCookie} from "../service/cookie";
 
-export default function LoginPage() {
+export default function LoginPage({setIsLogin}) {
     const navigate = useNavigate();
     const handleLogin = (values) => {
         login(values.username,values.password).then(data => {
             const userId = parseInt(data, 10);
             if (userId > 0) {
-                localStorage.setItem("userId", userId);
-                localStorage.setItem("isLogin", true);
-                navigate("/");
+                setIsLogin(true);
+                setCookie(userId);
                 notification.success({
                     message: '登录成功',
                     description: '欢迎回来'
                 });
+                navigate("/");
             } else {
                 notification.error({
                     message: '登录失败',
-                    description: data.msg
+                    //description: data.msg
                 });
             }
         });
