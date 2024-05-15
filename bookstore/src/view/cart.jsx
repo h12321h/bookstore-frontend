@@ -144,10 +144,10 @@ export default function CartPage() {
             <Modal title="确定订单信息" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}
                    footer={[
                        <Button key="取消" onClick={handleCancel}>
-                           Return
+                           取消
                        </Button>,
                        <Button key="提交" onClick={handleBuy}>
-                           Submit
+                           提交
                        </Button>,
                    ]}
             >
