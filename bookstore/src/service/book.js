@@ -1,7 +1,7 @@
 import {PREFIX} from "./config";
 
-export async function getBooks() {
-    return fetch(`${PREFIX}/books`, {
+export async function getBooks(page, size) {
+    return fetch(`${PREFIX}/books?page=${page}&size=${size}`, {
         credentials: 'include'  // 确保请求中包含 Cookie
     })
         .then(response => {
@@ -45,3 +45,10 @@ export async function getBookByPublisher(publisher) {
         .catch(error => console.error('Error fetching book:', error));
 }
 
+export async function getBookNum() {
+    return fetch(`${PREFIX}/books/num`, {
+        credentials: 'include'  // 确保请求中包含 Cookie
+    })
+        .then(response => response.json())
+        .catch(error => console.error('Error fetching book:', error));
+}

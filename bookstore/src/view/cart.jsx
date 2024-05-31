@@ -21,7 +21,13 @@ export default function CartPage() {
     const [phone, setPhone] = useState("");
     const [address, setAddress] = useState("");
     const showModal = () => {
-        setIsModalOpen(true);
+        if(totalNum===0){
+            notification.error({
+                message: '购物车为空'
+            });
+        }else{
+            setIsModalOpen(true);
+        }
     };
     const handleOk = () => {
         setIsModalOpen(false);
@@ -31,7 +37,8 @@ export default function CartPage() {
     };
 
     const initCart = async () => {//从后端抓取购物车数据
-        const data= await getCart(1);
+        const userId= getCookie();
+        const data= await getCart(userId);
         console.log(data);
         const updatedData = data.map(item => ({
             ...item,
@@ -105,7 +112,7 @@ export default function CartPage() {
             const userId = getCookie();
             const status = await addOrder(userId, name,phone,address,buybook); // Use await to get the actual result
 
-            if (status === "订单确认") {
+            if (status === "success") {
                 cartbook.filter(book => book.checked).map(cart =>{
                     console.log(cart.id);
                     deleteBookFromCart(cart.id);
@@ -117,6 +124,11 @@ export default function CartPage() {
                 setIsModalOpen(false);
                 notification.success({
                     message: '订单确认',
+                });
+            } else if (status === "stockout") {
+                notification.error({
+                    message: '库存不足',
+                    description: '请重新选择数量'
                 });
             } else {
                 notification.error({

@@ -1,7 +1,7 @@
 import BackButton from "./BackButton";
 import {addBookToCart} from "../service/cart";
 import {Button, Input, Modal, notification} from "antd";
-import {addOrder} from "../service/order";
+import {addOrder,getOrders,deleteOrder} from "../service/order";
 import {useState} from "react";
 import{getCookie} from "../service/cookie";
 
@@ -50,22 +50,29 @@ export default function BookDetail({book}) {
             price: book.price
         }];
         const userId = getCookie();
-        const status = await addOrder(userId, name, phone, address, buybook); // Use await to get the actual result
+        await addOrder(userId, name, phone, address, buybook).then(data => {
+            if (data === "success") {
+                setName("");
+                setPhone("");
+                setAddress("");
+                setIsModalOpen(false);
+                notification.success({
+                    message: '订单确认',
+                });
+            } else if (data === "stockout") {
+                notification.error({
+                    message: '库存不足',
+                    description: '请重新选择数量'
+                });
+            } else {
+                notification.error({
+                    message: '订单处理异常',
+                    description: '未能确认订单，请稍后重试'
+                });
+            }
+        })
+       // console.log("return ", data);
 
-        if (status === "订单确认") {
-            setName("");
-            setPhone("");
-            setAddress("");
-            setIsModalOpen(false);
-            notification.success({
-                message: '订单确认',
-            });
-        } else {
-            notification.error({
-                message: '订单处理异常',
-                description: '未能确认订单，请稍后重试'
-            });
-        }
     }
 
 
@@ -85,6 +92,14 @@ export default function BookDetail({book}) {
                     <div className="text-xl mt-6 ml-2 flex flex-row">
                         <h2 className="text-gray-500">出版社：</h2>
                         <h2>{book.publisher}</h2>
+                    </div>
+                    <div className="text-xl mt-6 ml-2 flex flex-row">
+                        <h2 className="text-gray-500">isbn：</h2>
+                        <h2>{book.isbn}</h2>
+                    </div>
+                    <div className="text-xl mt-6 ml-2 flex flex-row">
+                        <h2 className="text-gray-500">库存：</h2>
+                        <h2 className="text-blue-800">{book.stock}</h2>
                     </div>
                     <div id="book_price" className="text-xl mt-6 ml-2 flex flex-row">
                         <h2 className="text-gray-500">价格：</h2>
@@ -109,7 +124,7 @@ export default function BookDetail({book}) {
             <Modal title="确定订单信息" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}
                    footer={[
                        <Button key="取消" onClick={handleCancel}>
-                           取消
+                       取消
                        </Button>,
                        <Button key="提交" onClick={handleBuy}>
                            提交

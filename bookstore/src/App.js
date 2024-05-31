@@ -4,6 +4,7 @@ import './css/output.css'
 import AppRouter from './Router/router';
 import {useEffect,useState} from "react";
 import coverImageUrl from "./img/bg.jpg";
+import { AuthProvider } from './context/AuthContext';  // 引入 AuthProvider
 
 function initializeLocalStorage() {
   if (!localStorage.getItem('isLogin')) {

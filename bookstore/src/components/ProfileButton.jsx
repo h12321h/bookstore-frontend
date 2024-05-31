@@ -1,11 +1,11 @@
 import React, {useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
 import type { MenuProps} from 'antd';
-import {  Dropdown, ConfigProvider } from 'antd';
+import {  Dropdown, ConfigProvider,notification } from 'antd';
 import{useState} from "react";
 import{getUser} from "../service/user";
 import {getCookie} from "../service/cookie";
-
+import {logout} from "../service/login";
 
 function ProfileButton() {
     const navigate = useNavigate();
@@ -19,10 +19,27 @@ function ProfileButton() {
     }
 
     useEffect(() => {
-        console.log(localStorage.getItem('userId'));
+       // console.log(localStorage.getItem('userId'));
         initPerson();
     }, []);
 
+    const handleLogout = async () => {
+        logout().then(data => {
+            if (data === "success") {
+                //清空session
+                notification.success({
+                    message: '退出成功',
+                    description: '期待您下次光临'
+                });
+                navigate('/login');
+            }else{
+                notification.error({
+                    message: '退出失败',
+                    description: '请重试'
+                });
+            }
+        })
+    }
 
     //下拉菜单
     const items: MenuProps['items'] = [
@@ -45,7 +62,7 @@ function ProfileButton() {
         {
             key: '3',
             label: (
-                <button onClick={() => {navigate('/login')}}>
+                <button onClick={() => handleLogout()}>
                     退出登录
                 </button>
             ),

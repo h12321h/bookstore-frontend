@@ -1,9 +1,9 @@
 import {UploadOutlined} from '@ant-design/icons';
-import {message,Button, ConfigProvider, Upload, Flex, Image, Input, Form} from 'antd';
+import {message,Button, ConfigProvider, Upload, Flex, Image, Input, Form,notification} from 'antd';
 import Navbar from "../components/Navbar";
 import BackButton from "../components/BackButton";
 import {useEffect, useState} from "react";
-import {getUser} from "../service/user";
+import {getUser,updateUser} from "../service/user";
 import {getBooks} from "../service/book";
 import {getCookie} from "../service/cookie";
 
@@ -44,6 +44,21 @@ export default function ProfilePage() {
 
     const handleSave = () => {//处理保存按钮
         setPerson(tempPerson);
+        updateUser(tempPerson).then(data => {
+            //console.log(data);
+            if (data === "success") {
+                notification.success({
+                    message: '保存成功',
+                    description: '个人信息已保存'
+                });
+            } else {
+                notification.error({
+                    message: '保存失败',
+                    description: '请重试'
+                });
+                setTempPerson(person);
+            }
+        });
     }
 
     const handleCancel = () => {//处理取消按钮
@@ -113,8 +128,8 @@ export default function ProfilePage() {
                                   labelCol={{span: 10}}  // 设置标签的宽度占 8 个格
                                   wrapperCol={{span: 30}}>
                                 <Form.Item label="昵称">
-                                    <Input style={{width: 350}} value={tempPerson.name} size="large"
-                                           onChange={e => setTempPerson({...tempPerson, name: e.target.value})}/>
+                                    <Input style={{width: 350}} value={tempPerson.username} size="large"
+                                           onChange={e => setTempPerson({...tempPerson, username: e.target.value})}/>
                                 </Form.Item>
 
                                 <Form.Item label="联系方式">
