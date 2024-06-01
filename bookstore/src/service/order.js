@@ -55,7 +55,33 @@ export async function deleteOrder(id){
 }
 
 export async function getStatisticOrders(startDate,endDate){
-    return fetch(`${PREFIX}/orders/statistic`, {
+    return fetch(`${PREFIX}/order/statistic`, {
+        method: 'POST', // 使用 POST 方法
+        headers: {
+            'Content-Type': 'application/json', // 指定内容类型为 JSON
+        },
+        body: JSON.stringify({ startDate, endDate }), // 将参数转换为 JSON 字符串
+        credentials: 'include'  // 在这里添加
+    })
+        .then(response => response.json())
+        .catch(error => console.error('Error fetching cart:', error));
+}
+
+export async function getStatisticBooksNum(startDate,endDate){
+    return fetch(`${PREFIX}/order/statistic/num`, {
+        method: 'POST', // 使用 POST 方法
+        headers: {
+            'Content-Type': 'application/json', // 指定内容类型为 JSON
+        },
+        body: JSON.stringify({ startDate, endDate }), // 将参数转换为 JSON 字符串
+        credentials: 'include'  // 在这里添加
+    })
+        .then(response => response.json())
+        .catch(error => console.error('Error fetching cart:', error));
+}
+
+export async function getStatisticPrice(startDate,endDate){
+    return fetch(`${PREFIX}/order/statistic/price`, {
         method: 'POST', // 使用 POST 方法
         headers: {
             'Content-Type': 'application/json', // 指定内容类型为 JSON

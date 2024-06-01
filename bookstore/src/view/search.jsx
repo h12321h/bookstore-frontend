@@ -2,14 +2,18 @@
 import BookList from '../components/BookList';
 import { useLocation } from 'react-router-dom';
 import PageChange from "../components/PageChange";
-import {getBookByAuthor,getBookByPublisher,getBookByTitle} from "../service/book";
+import {getBookByAuthor, getBookByPublisher, getBookByTitle, getBookNum, getBooks,getNumByTitle} from "../service/book";
 import {useState,useEffect} from "react";
+import {Pagination} from "antd";
 
 function useQuery() {
     return new URLSearchParams(useLocation().search);
 }
 
-export default function SearchPage({page,setPage}) {
+export default function SearchPage() {
+    const [page, setPage] = useState(1);
+    const [total, setTotal] = useState(0);
+
     const query = useQuery();
     const searchType = query.get('type');//解析url
     const searchTerm = query.get('query');
@@ -19,7 +23,7 @@ export default function SearchPage({page,setPage}) {
 
     const initSearch = async () => {
         if(searchType === 'title'){
-            getBookByTitle(searchTerm).then(data => setSearchBook(data));
+            getBookByTitle(searchTerm,page-1,12).then(data => setSearchBook(data));
         }
         if(searchType === 'author'){
             getBookByAuthor(searchTerm).then(data => setSearchBook(data));
@@ -30,24 +34,34 @@ export default function SearchPage({page,setPage}) {
     }
 
     useEffect(() => {
-        initSearch();
-    },[searchTerm,searchType]);
+        const fetchData = async () => {
+            try {
+                const data = await getNumByTitle(searchTerm);
+                //把json格式的data转化为数字
+                setTotal(parseInt(data));
+            } catch (error) {
+                console.error('Error fetching book number:', error);
+            }
+        };
+        fetchData();
+    }, [searchTerm,searchType]);
 
-    const handlePageChange = (newPage) => {//处理页面切换
-        if(newPage>=1&&((newPage-1)*12<searchBook.length)){
-            setPage(newPage);
-            return 1;
-        }else{
-            return 0;
-        }
+    useEffect(() => {
+        initSearch();
+    },[page,searchTerm,searchType]);
+    const handlePageChange = (newPage) => {
+        setPage(newPage);
     }
 
     return (
         <div>
             <div className="absolute w-full top-24 px-16  bg-gray-100">
-                <p className="text-xl mt-6 ml-10">{'以下是"'+searchTerm+'"的搜索结果'}</p>
+                <p className="text-xl mt-6 ml-10">{'以下是"' + searchTerm + '"的搜索结果'}</p>
                 <BookList books={searchBook} currentPage={page}/>
-                <PageChange currentPage={page} handlePageChange={handlePageChange}/>
+                <div className="page_change relative h-20 flex flex-row justify-center mt-8">
+                    <Pagination current={page} pageSize={12} showSizeChanger={false} total={total}
+                                onChange={handlePageChange}/>
+                </div>
             </div>
         </div>
     );

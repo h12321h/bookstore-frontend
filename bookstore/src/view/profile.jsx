@@ -39,7 +39,6 @@ export default function ProfilePage() {
 
     useEffect(() => {
         initPerson();
-
     }, []);
 
     const handleSave = () => {//处理保存按钮
@@ -65,19 +64,15 @@ export default function ProfilePage() {
         setTempPerson(person);
     }
 
-    const handleChange = (info) => {
-        if (info.file.status === 'uploading') {
-            setLoading(true);
-            return;
-        }
-        if (info.file.status === 'done') {
-            // Get this url from response in real world.
-            getBase64(info.file.originFileObj, (url) => {
-                setLoading(false);
-                console.log(url);
-                setPerson({...person, avatar: url});
-            });
-        }
+    const handleChange = ({ file }) => {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            const base64Image = e.target.result;
+            setTempPerson({...tempPerson, avatar: base64Image});
+            //setTempImage(base64Image);
+        };
+        reader.readAsDataURL(file);
+        return false;
     };
 
     return (
@@ -92,13 +87,16 @@ export default function ProfilePage() {
                         <Image
                             width={300}
                             height={300}
-                            src={person.avatar}
+                            src={tempPerson.avatar}
                         />
                         <Upload name="avatar"
                                 className="avatar-uploader"
                                 showUploadList={false}
-                                beforeUpload={beforeUpload}
-                                onChange={handleChange}>
+                                beforeUpload={() => false}
+                                onChange={handleChange}
+                                accept=".jpg,.jpeg,.png"
+                        >
+
                             <Button icon={<UploadOutlined/>} size="large" type="default">修改头像</Button>
                         </Upload>
                     </Flex>

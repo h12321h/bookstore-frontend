@@ -44,3 +44,21 @@ export async function logout() {
         .then(response => response.text())
         .catch(error => console.error('Error logging out:', error));
 }
+
+export async function checkIdentity() {
+    return fetch(`${PREFIX}/check_identity`, {
+        method: 'GET',
+        credentials: 'include'
+    })
+        .then(response => response.json())
+        .catch(error => console.error('Error checking identity:', error));
+}
+
+export async function checkLogin() {
+    return fetch(`${PREFIX}/check_login`, {
+        method: 'GET',
+        credentials: 'include'
+    })
+        .then(response => response.json())
+        .catch(error => console.error('Error checking login:', error));
+}

@@ -12,7 +12,7 @@ export default function LoginPage({setIsLogin}) {
         login(values.username,values.password).then(data => {
             const userId = parseInt(data, 10);
             if (userId > 0) {
-                setIsLogin(true);
+                //setIsLogin(true);
                 setCookie(userId);
                 notification.success({
                     message: '登录成功',
