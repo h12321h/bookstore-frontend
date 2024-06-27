@@ -1,8 +1,21 @@
 import {PREFIX} from "./config";
 
-export async function getOrders(startDate,endDate,bookName) {
+export async function getOrders(startDate,endDate,bookName,page,size) {
     return fetch(`${PREFIX}/orders`, {
         method: 'POST', // 使用 POST 方法
+        headers: {
+            'Content-Type': 'application/json', // 指定内容类型为 JSON
+        },
+        body: JSON.stringify({ startDate, endDate, bookName ,page,size}), // 将参数转换为 JSON 字符串
+        credentials: 'include'  // 在这里添加
+    })
+        .then(response => response.json())
+        .catch(error => console.error('Error fetching cart:', error));
+}
+
+export async function getOrdersNum(startDate,endDate,bookName) {
+    return fetch(`${PREFIX}/orders/num`, {
+        method: 'POST',
         headers: {
             'Content-Type': 'application/json', // 指定内容类型为 JSON
         },

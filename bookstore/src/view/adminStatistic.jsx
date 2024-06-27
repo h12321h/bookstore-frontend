@@ -133,7 +133,7 @@ export default function AdminStatisticPage() {
             key: 'price',
             ellipsis: true,
             render: (price) => {
-                return '￥'+price;
+                return '￥'+price/100;
             }
         },
     ];
@@ -154,7 +154,7 @@ export default function AdminStatisticPage() {
                         <button
                             className="mt-4 bg-blue-900 w-20  h-10 rounded-lg shadow-lg text-white hover:bg-blue-950 ml-4"
                             onClick={cancelScreen}>
-                            清除
+                            /清除
                         </button>
                     </div>
                     <div className="ml-2">

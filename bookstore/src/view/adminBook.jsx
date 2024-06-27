@@ -46,9 +46,16 @@ export default function AdminBookPage() {
         let data= [];
         if(status||search){
             data= await getBookByTitle(bookName,tempPage ? tempPage - 1 : page - 1, 12);
+            //book的price/100
+            data.forEach((item) => {
+                item.price = (item.price / 100).toFixed(2);
+            });
             setBook(data);
         }else{
             data = await getBooks(tempPage ? tempPage - 1 : page - 1, 12);
+            data.forEach((item) => {
+                item.price = (item.price / 100).toFixed(2);
+            });
             setBook(data);
         }
 
@@ -132,6 +139,8 @@ export default function AdminBookPage() {
     const handleEditOk = (form) => {
         form.validateFields().then(values => {
             const newValues = { ...currentRecord, ...values };
+            //newValue的price*100
+            newValues.price = parseFloat(newValues.price) * 100;
             newValues.cover_image = tempImage;
             saveBook(newValues).then((data) => {
                 if (data === "success") {

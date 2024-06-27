@@ -16,7 +16,11 @@ const TableComponent = ({ data, columns }) => {
             {data.map((row, rowIndex) => (
                 <tr key={rowIndex}>
                     {columns.map((col, colIndex) => (
-                        <td key={colIndex} className="styled-cell">{row[col.accessor]}</td>
+                        //如果是价钱
+                        col.accessor === 'price' ?
+                            <td key={colIndex} className="styled-cell">{'¥' + row[col.accessor]/100}</td> :
+                            //如果是数量
+                                <td key={colIndex} className="styled-cell">{row[col.accessor]}</td>
                     ))}
                 </tr>
             ))}

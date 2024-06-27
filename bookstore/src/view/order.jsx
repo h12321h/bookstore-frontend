@@ -2,10 +2,11 @@
 import {useEffect, useState} from "react";
 import OrderBook from "../components/OrderBook";
 import coverImageUrl from "../img/bg.jpg";
-import {deleteOrder, getOrders} from "../service/order";
+import {deleteOrder, getOrders,getOrdersNum} from "../service/order";
 import {getCookie} from "../service/cookie";
-import {DatePicker,Space,Input,Radio} from "antd";
+import {DatePicker, Space, Input, Radio, Pagination} from "antd";
 import {useNavigate} from "react-router-dom";
+import {getBookNum} from "../service/book";
 
 const { RangePicker } = DatePicker;
 export default function OrderPage() {
@@ -13,6 +14,11 @@ export default function OrderPage() {
 
     const [dates, setDates] = useState([]);
     const [dateStrings, setDateStrings] = useState(["",""]);
+
+    const [page, setPage] = useState(1);
+    const [total, setTotal] = useState(0);
+    const size=3;
+    const [orders, setOrders] = useState([]);
 
     const handleDateChange = (dates, dateStrings) => {
         setDates(dates);
@@ -29,36 +35,63 @@ export default function OrderPage() {
 
 
     const handleScreen = () => {
-        fetchOrders(dateStrings[0],dateStrings[1],bookName);
+        setPage(1);
+        fetchOrders(dateStrings[0],dateStrings[1],bookName,1);
     }
 
     const cancelScreen = () => {
         setBookName("");
         setDates([]);
         setDateStrings(["",""]);
-        fetchOrders("","","");
+        setPage(1);
+        fetchOrders("","","",1);
     }
 
-    const [orders, setOrders] = useState([]);
-
-    // const initOrders = async () => {
-    //     const data = await getOrders();
-    //     console.log(data);
-    //     setOrders(data);
-    // }
-
-    const fetchOrders = async (startDate,endDate,bookName) => {
-        const data = await getOrders(startDate,endDate,bookName);
-        setOrders(data);
+    const fetchOrders = async (startDate,endDate,bookName,tempPage) => {
+        const data = await getOrdersNum(startDate, endDate, bookName);
+        const totalOrders = parseInt(data);
+        setTotal(totalOrders);
+        if (tempPage > Math.ceil(totalOrders / size)) {
+            if(totalOrders===0){
+                setPage(1);
+                setOrders([]);
+                return;
+            }
+            setPage(tempPage - 1);
+            const orderList=await getOrders(startDate,endDate,bookName,tempPage-2,size);
+            setOrders(orderList);
+        }else{
+            const orderList=await getOrders(startDate,endDate,bookName,tempPage-1,size);
+            setOrders(orderList);
+        }
+        //console.log(orders);
     }
+
+    // const fetchData = async () => {
+    //     try {
+    //         const data = await getOrdersNum(dateStrings[0], dateStrings[1], bookName);
+    //         const totalOrders = parseInt(data);
+    //         setTotal(totalOrders);
+    //         if (page > Math.ceil(totalOrders / size)+1) {
+    //             setPage(page - 1);
+    //         }
+    //         await fetchOrders(dateStrings[0], dateStrings[1], bookName, page);
+    //     } catch (error) {
+    //         console.error('Error fetching data:', error);
+    //     }
+    // };
 
     useEffect(() => {
-        fetchOrders(dateStrings[0],dateStrings[1],bookName);
-    }, []);
+        fetchOrders(dateStrings[0],dateStrings[1],bookName,page);
+    }, [page]);
 
     const onDelete = async (id) => {
         await deleteOrder(id);
-        fetchOrders(dateStrings[0],dateStrings[1],bookName);
+        fetchOrders(dateStrings[0],dateStrings[1],bookName,page);
+    }
+
+    const handlePageChange = (newPage) => {
+        setPage(newPage);
     }
 
 
@@ -93,7 +126,9 @@ export default function OrderPage() {
                 <div className="ml-24">
                     <button
                         className="mt-4 bg-white w-20  h-10 rounded-lg shadow-lg text-blue-800 hover:bg-blue-50 ml-4 border-2 border-blue-900"
-                        onClick={()=>{navigate('/statistics')}}>
+                        onClick={() => {
+                            navigate('/statistics')
+                        }}>
                         总统计
                     </button>
                 </div>
@@ -102,6 +137,10 @@ export default function OrderPage() {
                 {orders.map(order => <OrderBook order={order} onDelete={onDelete}/>)}
             </div>
             <div className="w-full h-20 bg-gray-100"></div>
+            <div className="page_change relative h-20 flex flex-row justify-center">
+                <Pagination current={page} pageSize={size} showSizeChanger={false} total={total}
+                            onChange={handlePageChange}/>
+            </div>
         </div>
     )
 }

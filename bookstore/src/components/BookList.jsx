@@ -13,7 +13,7 @@ function BookList({books}) {
                   cover_image={book.cover_image}
                   title={book.title}
                   author={book.author}
-                  price={book.price}
+                  price={book.price/100}
               />
           ))}
       </div>

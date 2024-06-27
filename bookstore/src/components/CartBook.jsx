@@ -17,7 +17,7 @@ const navigate = useNavigate();
                         onClick={handle2detail}>{book.title}</button>
                 <p className="mt-4 text-xs text-gray-400">{book.author}</p>
             </div>
-            <p className="cartprice text-xl text-blue-800">{'¥' + book.price}</p>
+            <p className="cartprice text-xl text-blue-800">{'¥' + book.price/100}</p>
             <input type="number"
                    className="cartquatity w-12 h-10 border-2 border-blue-400 rounded-lg text-center"
                    value={quantity}

@@ -103,7 +103,7 @@ export default function BookDetail({book}) {
                     </div>
                     <div id="book_price" className="text-xl mt-6 ml-2 flex flex-row">
                         <h2 className="text-gray-500">价格：</h2>
-                        <h2 className="text-blue-800">{"¥" + book.price}</h2>
+                        <h2 className="text-blue-800">{"¥" + book.price/100}</h2>
                     </div>
                     <div className=" mt-6 ml-2">
                         <h2 className="text-gray-500 text-xl">简介：</h2>

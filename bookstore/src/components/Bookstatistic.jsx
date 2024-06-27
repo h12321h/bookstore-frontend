@@ -58,6 +58,9 @@ const App = ({data}) => {
             sorter: (a, b) => a.price - b.price,
             sortOrder: sortedInfo.columnKey === 'price' ? sortedInfo.order : null,
             ellipsis: true,
+            render: (text, record) => {
+                return record.price/100;
+            }
         },
     ];
     return (

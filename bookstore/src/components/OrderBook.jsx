@@ -20,7 +20,7 @@ export default function OrderBook({order,onDelete}) {
             <div className="flex flex-row mt-4 w-full items-center">
                 <p className="ml-8 text-2xl mr-auto">{date.toLocaleDateString()}</p>
                 <div className="flex-col">
-                    <p className="mr-6 text-2xl text-blue-800">{'¥' + order.totalPrice}</p>
+                    <p className="mr-6 text-2xl text-blue-800">{'¥' + order.totalPrice/100}</p>
                     <p className="mr-6 text-l">{order.status}</p>
                 </div>
                 <button className="mr-6 w-8 h-10 rounded-lg hover:bg-gray-200"

@@ -66,8 +66,8 @@ export default function StatisticsPage() {
                     <RangePicker value={dates} onChange={handleDateChange}/>
                 </div>
                 <div className="flex flex-row ml-12 items-center mt-6 ">
-                    <div className="text-l ml-2">总共购买{bookNum}本书</div>
-                    <div className="text-l ml-2">累计花费{price}元</div>
+                    <div className="text-l ml-2">总共购买{isNaN(Number(bookNum)) ? '0' : bookNum}本书</div>
+                    <div className="text-l ml-2">累计花费{isNaN(Number(price))? '0': price / 100}元</div>
                 </div>
                 <div className="ml-56"></div>
                 <div className="ml-56">

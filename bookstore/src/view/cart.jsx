@@ -87,7 +87,7 @@ export default function CartPage() {
                 totalnum += parseInt(cart.quantity);
             }
         });
-        setTotalPrice(totalprice);
+        setTotalPrice(totalprice/100);
         setTotalNum(totalnum)
     }
 
