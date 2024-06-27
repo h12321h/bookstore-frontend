@@ -20,7 +20,7 @@ export default function CartBookList({cartbook,handleCheck,handleQuantity,handle
                     />
                 ))}
             </div>
-            <div className="w-full h-20 bg-gray-100"></div>
+            <div className="w-full h-24 bg-gray-100"></div>
         </div>
 
     )

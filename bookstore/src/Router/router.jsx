@@ -15,7 +15,6 @@ import Navbar from "../components/Navbar";
 import {getCookie} from "../service/cookie";
 import {PREFIX} from "../service/config";
 import AdminUserPage from "../view/adminUser";
-import AdminOderPage from "../view/adminOrder";
 import AdminStatisticPage from "../view/adminStatistic";
 import React, { useEffect } from 'react';
 import {useLocation } from 'react-router-dom';

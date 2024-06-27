@@ -1,13 +1,21 @@
 import {PREFIX} from "./config";
 
-export async function getCart(userId) {
-    return fetch(`${PREFIX}/cart`, {
+export async function getCart(page,size) {
+    return fetch(`${PREFIX}/cart?page=${page}&size=${size}`, {
         method: 'POST', // 使用 POST 方法
         credentials: 'include', // 确保请求中包含 Cookie
         headers: {
             'Content-Type': 'application/json', // 指定内容类型为 JSON
         },
-        body:userId // 将数据转换为 JSON 字符串
+    })
+        .then(response => response.json())
+        .catch(error => console.error('Error fetching cart:', error));
+}
+
+export async function getCartNum() {
+    return fetch(`${PREFIX}/cart/num`, {
+        method: 'GET',
+        credentials: 'include'  // 确保请求中包含 Cookie
     })
         .then(response => response.json())
         .catch(error => console.error('Error fetching cart:', error));

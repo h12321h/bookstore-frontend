@@ -11,6 +11,7 @@ import home from '../img/home.png';
 import users from '../img/users.png';
 import statistics from '../img/statistics.png';
 import books from '../img/book.png';
+import edit from '../img/edit.png';
 
 import {checkIdentity} from "../service/login";
 
@@ -35,6 +36,7 @@ function Navbar() {
                 <SearchBar/>
                 {isAdmin && <JumpButton imageUrl={books} to="/admin/books" className="flex ml-36 mt-4"/>}
                 {isAdmin && <JumpButton imageUrl={users} to="/admin/users" className="flex ml-2 mt-4"/>}
+                {isAdmin && <JumpButton imageUrl={edit} to="/admin/orders" className="flex ml-2 mt-4"/>}
                 {isAdmin && <JumpButton imageUrl={statistics} to="/admin/statistics" className="flex ml-2 mt-4"/>}
                 <JumpButton imageUrl={home} to="/" className="flex absolute right-28 mr-32 mt-4"/>
                 <JumpButton imageUrl={cart} to="/cart" className="flex absolute right-16 mr-32 mt-4"/>

@@ -26,6 +26,7 @@ export default function AdminOrderPage() {
     const handleScreen = () => {
         setPage(1);
         setSearch(true);
+        updateData();
     }
 
     const cancelScreen = () => {
@@ -93,7 +94,7 @@ export default function AdminOrderPage() {
             dataIndex: 'totalPrice',
             key: 'totalPrice',
             ellipsis: true,
-            render: (price) => `¥${price.toFixed(2)}`,
+            render: (price) => `¥${(price/100).toFixed(2)}`,
         },
         {
             title: '姓名',
@@ -124,7 +125,7 @@ export default function AdminOrderPage() {
         const itemColumns = [
             { title: '书籍名称', dataIndex: 'title', key: 'title' },
             { title: '本数', dataIndex: 'quantity', key: 'quantity' },
-            { title: '总价', dataIndex: 'price', key: 'price', render: (price) => `¥${price.toFixed(2)}` },
+            { title: '总价', dataIndex: 'price', key: 'price', render: (price) => `¥${(price/100).toFixed(2)}` },
         ];
         return(
             <ConfigProvider

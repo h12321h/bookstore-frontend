@@ -162,6 +162,7 @@ export default function AdminBookPage() {
     const handleAddOk = (form) => {
         form.validateFields().then(values => {
             const newValues = { ...values };
+            newValues.price = parseFloat(newValues.price) * 100;
             newValues.cover_image = tempImage;
             saveBook(newValues).then((data) => {
                 if (data === "success") {
