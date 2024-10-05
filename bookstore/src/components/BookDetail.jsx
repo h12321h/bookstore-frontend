@@ -41,6 +41,13 @@ export default function BookDetail({book}) {
                 placement: 'topRight'
             });
         }
+        if(data==="full"){
+            notification.error({
+                message: '失败',
+                description: '购物车已满',
+                placement: 'topRight'
+            });
+        }
     }
 
     const handleBuy = async () => {

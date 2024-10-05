@@ -45,15 +45,15 @@ export default function CartPage() {
     };
 
     const initCart = async () => {//从后端抓取购物车数据
-        const num = await getCartNum();
-        setTotal(num);
-        if(num===0){
-            return;
-        }
-        if(page>Math.ceil(num/size)){
-            console.log("page--:",page);
-            setPage(page-1);
-        }
+        // const num = await getCartNum();
+        // setTotal(num);
+        // if(num===0){
+        //     return;
+        // }
+        // if(page>Math.ceil(num/size)){
+        //     console.log("page--:",page);
+        //     setPage(page-1);
+        // }
         const data= await getCart(page-1,size);
         console.log(data);
         const updatedData = data.map(item => ({

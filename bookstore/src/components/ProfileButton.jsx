@@ -25,21 +25,35 @@ function ProfileButton() {
 
     const handleLogout = async () => {
         logout().then(data => {
-            if (data === "success") {
-                //清空session
+            const minutes = parseInt(data, 10); // 将返回的字符串转换为整数
+
+            if (!isNaN(minutes) && minutes >= 0) {
+                // 如果返回的分钟数有效，显示会话持续时间
+                let message = `会话持续了 ${minutes} 分钟`;
+
+                if (minutes > 60) {
+                    const hours = Math.floor(minutes / 60);
+                    const remainingMinutes = minutes % 60;
+                    message = `会话持续了 ${hours} 小时 ${remainingMinutes} 分钟`;
+                }
+
+                // 清空session，显示成功消息
                 notification.success({
                     message: '退出成功',
-                    description: '期待您下次光临'
+                    description: `${message}，期待您下次光临`
                 });
-                navigate('/login');
-            }else{
+
+                navigate('/login'); // 重定向到登录页面
+            } else {
+                // 如果返回的时间无效，显示错误消息
                 notification.error({
                     message: '退出失败',
                     description: '请重试'
                 });
             }
-        })
-    }
+        });
+    };
+
 
     //下拉菜单
     const items: MenuProps['items'] = [
