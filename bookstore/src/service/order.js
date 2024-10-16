@@ -39,19 +39,6 @@ export async function addOrder(userId,name,phone,address,items){
     const result = await response.text(); // 确保返回解析后的文本
     console.log("result:",result);
     return result; // 返回解析后的结果，以便在调用时处理
-
-    // return fetch(`${PREFIX}/order/add`, {
-    //     method: 'POST',
-    //     credentials: 'include',
-    //     headers: {
-    //         'Content-Type': 'application/json'
-    //     },
-    //     body: JSON.stringify({ userId,name,phone,address,items})
-    //     })
-    //     .then(response => {
-    //
-    //     })
-    //     .catch(error => console.error('Error adding order:', error));
 }
 
 export async function deleteOrder(id){

@@ -8,6 +8,7 @@ import {getCart,updateBookQuantity,deleteBookFromCart,getCartNum} from "../servi
 import {addOrder} from "../service/order";
 import { Button,Modal,Input } from 'antd';
 import {getCookie} from "../service/cookie";
+import {connectWebSocket} from "../service/OrderResultWebSocket";
 
 export default function CartPage() {
     const [cartbook, setCartbook] = useState([]);
@@ -55,7 +56,7 @@ export default function CartPage() {
         //     setPage(page-1);
         // }
         const data= await getCart(page-1,size);
-        console.log(data);
+        console.log('init',data);
         const updatedData = data.map(item => ({
             ...item,
             checked: false
@@ -123,6 +124,7 @@ export default function CartPage() {
         setCartbook(newCartbook);
     }
 
+    const[orderResult,setOrderResult]=useState("");
     const handleBuy = async () => { // Make the function async
         try {
             const buybook = cartbook.filter(book => book.checked)
@@ -132,28 +134,14 @@ export default function CartPage() {
                     price: cart.book.price
                 }));
 
-            console.log(buybook);
             const userId = getCookie();
+            connectWebSocket(userId,setOrderResult);
             const status = await addOrder(userId, name,phone,address,buybook); // Use await to get the actual result
 
             if (status === "success") {
-                cartbook.filter(book => book.checked).map(cart =>{
-                    console.log(cart.id);
-                    deleteBookFromCart(cart.id);
-                });
-                setCartbook(cartbook.filter(cart => !buybook.some(buy => buy.bookId === cart.book.id)));
-                setName("");
-                setPhone("");
-                setAddress("");
-                setIsModalOpen(false);
                 notification.success({
                     message: '订单确认',
-                });
-                initCart();
-            } else if (status === "stockout") {
-                notification.error({
-                    message: '库存不足',
-                    description: '请重新选择数量'
+                    description: '订单提交成功,正在处理'
                 });
             } else {
                 notification.error({
@@ -168,6 +156,38 @@ export default function CartPage() {
             });
         }
     };
+
+    useEffect(() => {
+        if(orderResult!=="") {
+            if (orderResult === "订单处理成功") {
+                notification.success({
+                    message: '订单处理成功',
+                    description: '您的订单已经成功处理',
+                });
+                cartbook.filter(book => book.checked).map(cart => {
+                    console.log(cart.id);
+                    deleteBookFromCart(cart.id);
+                });
+                setCartbook(cartbook.filter(book => !book.checked));
+                setName("");
+                setPhone("");
+                setAddress("");
+                setIsModalOpen(false);
+                //initCart();
+            } else if (orderResult === "订单处理失败，库存不足") {
+                notification.error({
+                    message: '库存不足',
+                    description: '请重新选择商品数量',
+                });
+            }else {
+                notification.error({
+                    message: '订单处理失败',
+                    description: '订单处理过程中出现异常，请稍后再试。',
+                });
+            }
+        }
+    }, [orderResult]);
+
 
 
     return (

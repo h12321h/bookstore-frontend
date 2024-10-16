@@ -2,8 +2,9 @@ import BackButton from "./BackButton";
 import {addBookToCart} from "../service/cart";
 import {Button, Input, Modal, notification} from "antd";
 import {addOrder,getOrders,deleteOrder} from "../service/order";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import{getCookie} from "../service/cookie";
+import {connectWebSocket} from "../service/OrderResultWebSocket";
 
 export default function BookDetail({book}) {
 
@@ -12,6 +13,8 @@ export default function BookDetail({book}) {
     const [name, setName] = useState("");
     const [phone, setPhone] = useState("");
     const [address, setAddress] = useState("");
+
+    const [orderResult, setOrderResult] = useState("");
 
     const showModal = () => {
         setIsModalOpen(true);
@@ -57,6 +60,7 @@ export default function BookDetail({book}) {
             price: book.price
         }];
         const userId = getCookie();
+        connectWebSocket(userId,setOrderResult);
         await addOrder(userId, name, phone, address, buybook).then(data => {
             if (data === "success") {
                 setName("");
@@ -65,11 +69,7 @@ export default function BookDetail({book}) {
                 setIsModalOpen(false);
                 notification.success({
                     message: '订单确认',
-                });
-            } else if (data === "stockout") {
-                notification.error({
-                    message: '库存不足',
-                    description: '请重新选择数量'
+                    description: '订单提交成功,正在处理'
                 });
             } else {
                 notification.error({
@@ -81,6 +81,31 @@ export default function BookDetail({book}) {
        // console.log("return ", data);
 
     }
+
+    useEffect(() => {
+        if(orderResult!==""){
+            if (orderResult === "订单处理成功") {
+                setName("");
+                setPhone("");
+                setAddress("");
+                setIsModalOpen(false);
+                notification.success({
+                    message: '订单处理成功',
+                    description: '您的订单已经成功处理',
+                });
+            } else if (orderResult === "订单处理失败，库存不足") {
+                notification.error({
+                    message: '库存不足',
+                    description: '请重新选择商品数量',
+                });
+            } else {
+                notification.error({
+                    message: '订单处理失败',
+                    description: '订单处理过程中出现异常，请稍后再试。',
+                });
+            }
+        }
+    }, [orderResult]);
 
 
     //console.log(book);

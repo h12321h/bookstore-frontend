@@ -9,3 +9,4 @@
 ./node_modules/
 ./bookstore/node_modules/
 bookstore/node_modules/
+/node_modules/
