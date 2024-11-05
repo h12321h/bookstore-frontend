@@ -15,6 +15,13 @@ function SearchBar() {
     }
     const handleSearch = () => {//筛选符合条件的书籍
         if(searchValue==="") return;
+        if(searchType==="author"){
+            let to="/searchAuthor?query="+encodeURIComponent(searchValue);
+            setSearchValue("");
+            setSearchType("title");
+            navigate(to);
+            return;
+        }
         let to="/search?type="+encodeURIComponent(searchType)+"&query="+encodeURIComponent(searchValue);
         setSearchValue("");
         setSearchType("title");
@@ -28,6 +35,7 @@ function SearchBar() {
                 onChange={e => setSearchType(e.target.value)}
                 className="w-15 h-10 bg-white border-l-2 border-t-2 border-b-2 border-blue-900 rounded-l-lg shadow-lg focus:outline-none">
                 <option value="title" className="text-center">书名</option>
+                <option value="author" className="text-center">根据书名找作者</option>
                 {/*<option value="author" className="text-center">作者</option>*/}
                 {/*<option value="publisher" className="text-center">出版社</option>*/}
             </select>
