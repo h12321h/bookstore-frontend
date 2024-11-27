@@ -11,6 +11,7 @@ import StatisticsPage from "../view/statistics";
 import AdminBookPage from "../view/adminBook";
 import AdminOrderPage from "../view/adminOrder";
 import SearchAuthorPage from "../view/searchAuthor";
+import SearchTagPage from "../view/searchTag";
 import {useState} from "react";
 import Navbar from "../components/Navbar";
 import {getCookie} from "../service/cookie";
@@ -81,6 +82,7 @@ function ProtectedRoutes() {
                 <Route path="/orders" element={<OrderPage />} /> {/* 订单页 */}
                 <Route path="/statistics" element={<StatisticsPage />} /> {/* 统计页 */}
                 <Route path="/searchAuthor" element={<SearchAuthorPage />} /> {/* 作者搜索页 */}
+                <Route path="/searchTag" element={<SearchTagPage />} /> {/* 标签搜索页 */}
 
                 <Route
                     path="/admin/books"

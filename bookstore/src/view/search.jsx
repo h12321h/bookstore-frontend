@@ -57,7 +57,7 @@ export default function SearchPage() {
         <div>
             <div className="absolute w-full top-24 px-16  bg-gray-100">
                 <p className="text-xl mt-6 ml-10">{'以下是"' + searchTerm + '"的搜索结果'}</p>
-                <BookList books={searchBook} currentPage={page}/>
+                <BookList books={searchBook}/>
                 <div className="page_change relative h-20 flex flex-row justify-center mt-8">
                     <Pagination current={page} pageSize={12} showSizeChanger={false} total={total}
                                 onChange={handlePageChange}/>

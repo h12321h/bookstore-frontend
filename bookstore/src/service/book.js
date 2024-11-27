@@ -84,3 +84,11 @@ export async function saveBook(book) {
         .then(response => response.text())
         .catch(error => console.error('Error adding book:', error));
 }
+
+export async function getBookByTag(tagName) {
+    return fetch(`${PREFIX}/getBooksByTag?tagName=${encodeURIComponent(tagName)}`, {
+        credentials: 'include'  // 确保请求中包含 Cookie
+    })
+        .then(response => response.json())
+        .catch(error => console.error('Error fetching book:', error));
+}
