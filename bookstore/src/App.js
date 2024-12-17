@@ -5,6 +5,8 @@ import AppRouter from './Router/router';
 import {useEffect,useState} from "react";
 import coverImageUrl from "./img/bg.jpg";
 import { AuthProvider } from './context/AuthContext';  // 引入 AuthProvider
+import { ApolloProvider } from "@apollo/client";
+import client from "./service/graphQL/ApolloClient";
 
 function initializeLocalStorage() {
   if (!localStorage.getItem('isLogin')) {
@@ -16,7 +18,9 @@ function App() {
     initializeLocalStorage();
   }, []);
   return (
-      <AppRouter />
+      <ApolloProvider client={client}>
+        <AppRouter />
+      </ApolloProvider>
   );
 }
 export default App;
