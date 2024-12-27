@@ -14,6 +14,13 @@ function SearchBar() {
         }
     }
     const handleSearch = () => {//筛选符合条件的书籍
+        if(searchType==="countKeywords"){
+            let to="/countKeywords";
+            setSearchValue("");
+            setSearchType("title");
+            navigate(to);
+            return;
+        }
         if(searchValue==="") return;
         if(searchType==="author"){
             let to="/searchAuthor?query="+encodeURIComponent(searchValue);
@@ -44,6 +51,7 @@ function SearchBar() {
                 <option value="title" className="text-center">书名</option>
                 <option value="author" className="text-center">根据书名找作者</option>
                 <option value="tag" className="text-center">标签</option>
+                <option value="countKeywords" className="text-center">统计简介关键词</option>
                 {/*<option value="author" className="text-center">作者</option>*/}
                 {/*<option value="publisher" className="text-center">出版社</option>*/}
             </select>

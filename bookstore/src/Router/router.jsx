@@ -21,6 +21,7 @@ import AdminStatisticPage from "../view/adminStatistic";
 import React, { useEffect } from 'react';
 import {useLocation } from 'react-router-dom';
 import { checkLogin, checkIdentity } from '../service/login';
+import CountKeywordsPage from "../view/countKeywords";
 
 export default function AppRouter() {
     return (
@@ -83,6 +84,7 @@ function ProtectedRoutes() {
                 <Route path="/statistics" element={<StatisticsPage />} /> {/* 统计页 */}
                 <Route path="/searchAuthor" element={<SearchAuthorPage />} /> {/* 作者搜索页 */}
                 <Route path="/searchTag" element={<SearchTagPage />} /> {/* 标签搜索页 */}
+                <Route path="/countKeywords" element={<CountKeywordsPage />} /> {/* 关键词统计页 */}
 
                 <Route
                     path="/admin/books"
